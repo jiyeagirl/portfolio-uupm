@@ -1,0 +1,96 @@
+@import "tailwindcss";
+
+@font-face {
+  font-family: "Pretendard Variable";
+  font-weight: 45 920;
+  font-style: normal;
+  font-display: swap;
+  src: url("/fonts/PretendardVariable.woff2") format("woff2-variations");
+}
+
+:root {
+  --background: #faf9f5;
+  --surface: #f2f0e9;
+  --surface-elevated: #ffffff;
+  --foreground: #17160f;
+  --muted: #6f6e64;
+  --border: #e3e0d5;
+  --accent: #1d3b2e;
+  --accent-foreground: #f5f4ec;
+  --accent-soft: #e4ebe4;
+}
+
+:root[data-theme="dark"] {
+  --background: #121210;
+  --surface: #1b1a16;
+  --surface-elevated: #201f1a;
+  --foreground: #f1efe6;
+  --muted: #a4a196;
+  --border: #302e27;
+  --accent: #4c9270;
+  --accent-foreground: #0e1512;
+  --accent-soft: #1c2c22;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --background: #121210;
+    --surface: #1b1a16;
+    --surface-elevated: #201f1a;
+    --foreground: #f1efe6;
+    --muted: #a4a196;
+    --border: #302e27;
+    --accent: #4c9270;
+    --accent-foreground: #0e1512;
+    --accent-soft: #1c2c22;
+  }
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-surface: var(--surface);
+  --color-surface-elevated: var(--surface-elevated);
+  --color-foreground: var(--foreground);
+  --color-muted: var(--muted);
+  --color-border: var(--border);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent-soft: var(--accent-soft);
+  --font-sans: "Pretendard Variable", "Pretendard", -apple-system, sans-serif;
+}
+
+/* 기본 테두리 색. 반드시 @layer base 안에 둔다. 레이어 밖에 두면 Tailwind 유틸리티(@layer utilities)보다
+   우선해서 border-[var(--x)], border-neutral-200 같은 테두리 색 클래스가 전부 이 색으로 덮인다. */
+@layer base {
+  *,
+  ::before,
+  ::after {
+    border-color: var(--border);
+  }
+}
+
+html {
+  color-scheme: light;
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "status": "ok",
+  "preset": "console",
+  "dials": [
+    4,
+    3,
+    8
+  ],
+  "query": "B2B procurement purchase order supplier management",
+  "slug": "partloop",
+  "category": "B2B Service",
+  "style": "Accessible & Ethical",
+  "display_font": "Plus Jakarta Sans",
+  "replaced": [],
+  "warnings": [],
+  "at": "2026-10-02T16:39:56"
+}

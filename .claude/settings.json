@@ -1,0 +1,38 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(bash scripts/scaffold.sh *)",
+      "Bash(python3 .claude/skills/design-intake/scripts/intake.py *)",
+      "Bash(python .claude/skills/design-intake/scripts/intake.py *)",
+      "Bash(python3 .claude/skills/ui-ux-pro-max/scripts/search.py *)",
+      "Bash(python .claude/skills/ui-ux-pro-max/scripts/search.py *)",
+      "Bash(npm run visual *)",
+      "Bash(npm run capture *)"
+    ]
+  },
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Write",
+        "hooks": [
+          { "type": "command", "command": "node \"$CLAUDE_PROJECT_DIR\"/.claude/hooks/pre-write-design-gate.mjs", "timeout": 10 }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit|MultiEdit",
+        "hooks": [
+          { "type": "command", "command": "node \"$CLAUDE_PROJECT_DIR\"/.claude/hooks/post-edit-check.mjs", "timeout": 10 }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          { "type": "command", "command": "node \"$CLAUDE_PROJECT_DIR\"/.claude/hooks/stop-visual-gate.mjs", "timeout": 10 }
+        ]
+      }
+    ]
+  }
+}

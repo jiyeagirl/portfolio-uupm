@@ -1,0 +1,12 @@
+node_modules/
+.next/
+out/
+next-env.d.ts
+*.tsbuildinfo
+.env*
+.DS_Store
+# 시각 검증 산출물과 마커
+**/.visual/
+**/.visual-pending
+# 파이썬 캐시 (UUPM, design-intake)
+__pycache__/
