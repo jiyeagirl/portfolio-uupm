@@ -47,11 +47,13 @@ projects/<category>/<project>/
 
 ## 2. 프리셋
 
-| 프리셋 | 용도 | 기본 다이얼 (V/M/D) | 플랫폼 레퍼런스 |
-|---|---|---|---|
-| `console` (기본) | B2B 서비스, 관리자, 운영 도구 | 4 / 3 / 8 | `references/console.md` |
-| `web` | 고객용 반응형 사이트 | 6 / 5 / 5 | `references/web.md` |
-| `app` | 모바일 앱 (iPhone 16 Pro 프레임 1대) | 5 / 5 / 5 | `references/app.md` |
+| 프리셋 | 용도 | 품질 기준 | 기본 다이얼 (V/M/D) | 플랫폼 레퍼런스 |
+|---|---|---|---|---|
+| `console` (기본) | B2B 서비스, 관리자, 운영 도구 | **절제.** 빠르게 읽히고 틀리지 않으면 통과. 공들인 장식은 감점 | 4 / 3 / 8 | `references/console.md` |
+| `web` | 고객용 반응형 사이트 | **표현.** 3초 안에 이 서비스만의 인상이 보여야 통과 | 7 / 5 / 4 | `references/web.md` + `art-direction.md` |
+| `app` | 모바일 앱 (iPhone 16 Pro 프레임 1대) | **표현.** web과 같음 | 7 / 6 / 5 | `references/app.md` + `art-direction.md` |
+
+UUPM은 "틀리지 않게"까지만 정해줌. web, app은 그 위에 아트 디렉션(무드, 레퍼런스 3개, 시그니처 요소 2개 이상)을 반드시 더함. 빼기만 하는 판단은 무난한 화면을 만듦.
 
 - `/scaffold <category>/<project> [console|web|app] [--with-admin] [--with-mobile]` (내부적으로 `bash scripts/scaffold.sh` 실행)
 - 다이얼은 spec에 `다이얼: V/M/D` 줄이 있으면 그것을 따름.
@@ -64,7 +66,8 @@ projects/<category>/<project>/
    2. `python3 .claude/skills/design-intake/scripts/intake.py --project projects/<c>/<p> --query "<질의어>"` 실행. UUPM 생성, 폰트와 스타일 자동 검사, 프로젝트 안 저장까지 함.
    3. 카테고리, 컬러, 폰트가 spec과 맞는지 눈으로 확인. 안 맞으면 질의어를 좁혀 1회 재실행.
    4. 보조 검색(`--domain product|ux|chart`)으로 화면 근거를 보강.
-   5. `pages/<preset>.md`의 "프로젝트 판단" 절(상태 색, 셸 선택, 보조 검색 결과)과 `design.md`를 씀.
+   5. web, app이면 `references/art-direction.md`로 아트 디렉션을 정함.
+   6. `pages/<preset>.md`의 "프로젝트 판단" 절(상태 색, 셸 선택, 보조 검색 결과)과 `design.md`를 씀.
 3. **빌드.** `lib/types.ts` → `lib/mock-data.ts` → `components/ui.tsx` → 화면 → 셸 → `src/index.tsx` 순서. spec의 모든 화면을 한 번에 만들고 화면마다 멈추지 않음.
 4. **검사.** `tsc --noEmit`, `eslint`, 라우트 200 확인을 마지막에 한 번.
 5. **시각 검증** (4절).
@@ -80,7 +83,7 @@ projects/<category>/<project>/
 3. 리뷰어 3개를 **병렬로** 띄움. 리뷰어에게 코드는 주지 않고 캡처 PNG와 문서만 줌. 프롬프트에 프로젝트 경로, slug, 프리셋, PNG 목록(각 PNG가 어떤 상태인지)을 적음.
    - `review-domain`: spec + MASTER.md 기준. 업종에 맞는 인상인가, Anti-patterns를 어겼는가
    - `review-ux`: UUPM 사전 점검표 + 플랫폼 레퍼런스. 상태 표기, 정렬, 숫자 표기, 포커스, 빈 상태
-   - `review-visual`: 위계, 여백, 정렬, 반복 레이아웃, AI 티 나는 패턴
+   - `review-visual`: 위계, 여백, 정렬, 반복 레이아웃, AI 티 나는 패턴. web, app은 무난함 점검표와 시그니처 요소 노출까지 판정
 4. 지적을 high / mid / low로 합치고 high, mid만 고침. 바뀐 화면만 다시 캡처해서 같은 리뷰어에게 재판정 받음.
 5. 최대 2라운드. 남은 지적은 최종 요약의 "미해결"로 넘김.
 6. 빌더도 수정한 화면 PNG를 직접 열어 확인함. 리뷰어의 "통과"만 믿지 않음.
@@ -100,7 +103,8 @@ projects/<category>/<project>/
 ## 6. 워크스페이스 고정 규칙
 
 ### 폰트
-- 본문, UI 라벨, 한글 전체는 Pretendard.
+- 본문, UI 라벨, 버튼, 입력칸은 Pretendard. console은 한글 제목도 Pretendard.
+- web, app은 한글 제목(페이지, 섹션 제목, 히어로 문구)에 한글 디스플레이 폰트 1개를 쓸 수 있음. 후보와 설치법은 `references/font-map.md`.
 - 제목 영문, KPI 숫자, 금액은 UUPM 추천 폰트 허용. `--font-display: "<추천>", "Pretendard Variable", sans-serif`로 폴백 구성.
 - 숫자 열은 `tabular-nums` 지원 폰트만. 장식성 폰트(스크립트, 손글씨)는 숫자에 금지.
 - 세리프가 추천되면 한글 제목도 세리프 계열로 매핑 (`references/font-map.md`).
@@ -111,17 +115,18 @@ projects/<category>/<project>/
 - 회사명은 `A테크`, `B소재`처럼 알파벳으로 익명화. 사람, 연락처는 그럴듯한 가상값.
 - 빈 섹션, Lorem Ipsum, TODO, "Coming Soon" 금지.
 
-### 구현 가능성 (목업도 실제로 개발할 수 있는 수준으로)
+### 구현 가능성 (콘솔 KPI 기준. 목업도 실제로 개발할 수 있는 수준으로)
 - KPI, 요약 카드의 보조 문구는 집계 기준을 설명하는 고정 문구만 씀 (예: "수락 대기, 진행 중, 지연 포함"처럼 spec의 상태명 그대로). 데이터가 바뀌어도 그대로 쓸 수 있어야 함.
 - 숫자를 다시 쪼갠 내역("승인 대기 2건 포함"), 특정 레코드 이름("B소재 PO-2609-025"), 근거 없는 증감률("전월 대비 +12%")을 보조 문구에 넣지 않음. 카드 하나마다 집계 쿼리가 늘어나는 문구는 금지.
 - 보조 문구 자체가 필요 없으면 생략함. 라벨에 단위나 기준을 넣는 것으로 충분한 경우가 많음.
 - 행 단위 파생값(D-day, 지연 일수, 행 금액)은 해당 레코드 필드만으로 계산되므로 허용.
+- 이 절은 콘솔 KPI 보조 문구 규칙임. 소비자 화면의 단순 카운트(이웃 수, 오늘 새 글, 참여 인원)는 목업 데이터로 써도 됨.
 
 ### 스택
 - Tailwind, `@phosphor-icons/react`, `motion/react`. shadcn/ui와 `@iconify/react` 신규 사용 금지.
 - 각 프로젝트는 자기 `components/ui.tsx`를 씀.
 - 프로젝트 토큰은 `styles/<project>.css`에 프로젝트 접두사 CSS 변수(`--pl-accent`)로 정의하고 루트 래퍼 클래스(`.partloop`)에 스코프함. `src/index.tsx`에서 import하고 Tailwind에서는 `bg-(--pl-accent)`처럼 씀. `@theme`은 `app/globals.css` 전용 (프로젝트 CSS에 쓰면 처리되지 않음).
-- 디스플레이 폰트는 `@fontsource/<slug>`의 필요한 굵기만 프로젝트 CSS에서 import (오프라인 빌드에서도 깨지지 않음).
+- 디스플레이 폰트는 npm 폰트 패키지(`@fontsource/<slug>`, `@sun-typeface/suit`, `wanted-sans` 등)를 설치하고 필요한 굵기만 프로젝트 CSS에서 import (오프라인 빌드에서도 깨지지 않음).
 - 초기 화면은 `useSearchParams`로 읽음. 렌더 중에 `window`를 읽으면 서버와 클라이언트 결과가 달라져 hydration 에러가 남.
 - 모션은 `prefers-reduced-motion` 존중. 콘솔은 화면 전환 페이드 1개와 상태 변화 피드백 정도만.
 

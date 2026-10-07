@@ -17,6 +17,7 @@ spec.md → [1 질의어] → [2 intake.py: UUPM 생성 + 자동 검사 + 저장
 
 - 프로젝트의 `spec.md` 전체
 - 프리셋에 맞는 레퍼런스 하나: `references/console.md` | `references/web.md` | `references/app.md`
+- web, app이면 `references/art-direction.md`도 (4.5단계)
   - 프리셋은 spec의 `프리셋:` 줄, 없으면 `_reference.md`의 `- 프리셋:`, 없으면 `플랫폼:` 줄로 판단. 모두 없으면 console
 - 폰트가 세리프거나 숫자 지원이 미확인이면 `references/font-map.md`
 
@@ -40,7 +41,7 @@ python3 .claude/skills/design-intake/scripts/intake.py \
 ```
 
 스크립트가 하는 일:
-- 프리셋과 다이얼 결정 (spec의 `다이얼: V/M/D`가 우선, 기본값은 console 4/3/8, web 6/5/5, app 5/5/5)
+- 프리셋과 다이얼 결정 (spec의 `다이얼: V/M/D`가 우선, 기본값은 console 4/3/8, web 7/5/4, app 7/6/5)
 - UUPM `--design-system` 실행
 - **폰트 자동 검사와 교체**: 무드가 프리셋과 안 맞거나(예: 콘솔에 academia, luxury), 금지 목록(Inter, Geist, Roboto 등)이거나, 모노스페이스면 대체 후보로 교체. 콘솔은 고정폭 숫자 지원 폰트를 우선하고, 다른 프로젝트가 이미 쓴 폰트는 뒤로 미룸
 - **스타일 검사**: 프리셋에 안 맞는 스타일(콘솔의 glass, clay, brutalism 등)이면 경고
@@ -75,6 +76,12 @@ python3 $S "<차트 목적>" --domain chart -n 2            # 차트가 있을 �
 
 질의 하나에 의도 하나. 결과가 비거나 엉뚱하면 한 번만 바꿔 재시도하고, 그래도 없으면 "검증된 결과 없음"으로 기록하고 레퍼런스의 기본값을 씀.
 
+## 4.5 아트 디렉션 (web, app 필수. console은 건너뜀)
+
+`references/art-direction.md`를 끝까지 읽고 그 절차대로 무드 문장, 레퍼런스 3개, 시그니처 요소 2개 이상을 정함. console은 절제가 품질 기준이라 이 단계를 하지 않음.
+
+빼기만 하는 판단이 쌓이면 화면이 무난해짐. "버림"에 적은 수만큼 "더한 것"을 적음.
+
 ## 5. 판단 기록
 
 `pages/<preset>.md`의 `## 프로젝트 판단 (에이전트가 작성)` 절을 실제 내용으로 바꿈. 제목의 "(에이전트가 작성)"도 지움. intake를 다시 돌려도 이 절은 보존됨.
@@ -99,6 +106,12 @@ python3 $S "<차트 목적>" --domain chart -n 2            # 차트가 있을 �
 
 ## 앞선 프로젝트와 다르게 고른 것
 - 셸, 폰트, 본문 크기/행간, 진입 모션 중 최소 2개
+
+## 아트 디렉션 (web, app만)
+무드, 레퍼런스 3개, 시그니처 2개 이상 (형식은 references/art-direction.md)
+
+## 더한 것 (web, app만)
+- 버림과 같은 수 이상
 ```
 
 ## 우선순위

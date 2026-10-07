@@ -64,8 +64,18 @@ if (intake) {
 const designMd = join(project, "design.md");
 if (!existsSync(designMd)) {
   problems.push(`${projRel}/design.md 없음. 적용 판단과 근거를 먼저 씀`);
-} else if (!/^해석\s*:/m.test(readFileSync(designMd, "utf8"))) {
-  problems.push(`${projRel}/design.md에 '해석:' 줄이 없음. design-intake SKILL.md 5단계 형식으로 씀`);
+} else {
+  const dm = readFileSync(designMd, "utf8");
+  if (!/^해석\s*:/m.test(dm)) problems.push(`${projRel}/design.md에 '해석:' 줄이 없음. design-intake SKILL.md 5단계 형식으로 씀`);
+  // 사용자 웹과 앱은 "틀리지 않음" 위에 인상이 있어야 함 (references/art-direction.md)
+  if (intake && (intake.preset === "web" || intake.preset === "app")) {
+    const section = (name) => (dm.split(new RegExp(`^## ${name}.*$`, "m"))[1] || "").split(/^## /m)[0];
+    if (!/^## 아트 디렉션/m.test(dm)) {
+      problems.push(`${projRel}/design.md에 '## 아트 디렉션' 절이 없음. references/art-direction.md 절차로 무드, 레퍼런스 3개, 시그니처 2개 이상을 씀`);
+    }
+    const added = section("더한 것").split("\n").filter((l) => l.trim().startsWith("-")).length;
+    if (added < 2) problems.push(`${projRel}/design.md의 '## 더한 것'이 2줄 미만. 버리기만 하면 화면이 무난해짐`);
+  }
 }
 
 if (problems.length) {

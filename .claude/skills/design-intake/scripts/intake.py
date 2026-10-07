@@ -29,8 +29,8 @@ from pathlib import Path
 PRESETS = {
     # 다이얼: variance / motion / density
     "console": {"dials": (4, 3, 8), "font_query": "dashboard admin enterprise professional"},
-    "web": {"dials": (6, 5, 5), "font_query": "modern brand website"},
-    "app": {"dials": (5, 5, 5), "font_query": "modern mobile app friendly"},
+    "web": {"dials": (7, 5, 4), "font_query": "modern brand website"},
+    "app": {"dials": (7, 6, 5), "font_query": "modern mobile app friendly"},
 }
 
 # 프리셋별로 결과에서 걸러낼 신호. 소문자 부분 일치.
@@ -299,7 +299,8 @@ def main() -> int:
         *([f"- {k}: {old} → {new}" for k, old, new in replaced] or ["- 없음"]),
         "",
         "## 폰트 (워크스페이스 정책 적용)",
-        "- 본문, 라벨, 한글 전체: Pretendard",
+        "- 본문, 라벨, 버튼, 입력칸: Pretendard",
+        ("- 한글 제목: Pretendard (console)" if preset == "console" else "- 한글 제목: 한글 디스플레이 폰트 1개 허용. references/font-map.md에서 무드에 맞게 골라 아트 디렉션에 적음"),
         f"- 디스플레이(제목 영문, KPI 숫자, 금액): {display} ({font_note})",
         f'- CSS: `--font-display: "{display}", "Pretendard Variable", Pretendard, sans-serif`',
         {True: f"- 숫자: {display}에 tabular-nums 적용 (지원 확인됨)",
@@ -341,7 +342,11 @@ def main() -> int:
     for n in notes:
         print(f"  참고: {n}")
     print(f"  저장: {master.relative_to(root)}, {override.relative_to(root)}, {(project / '.intake.json').relative_to(root)}")
-    print("  다음: override의 '프로젝트 판단' 절을 채우고 design.md를 쓴 뒤 UI 작성")
+    if preset == "console":
+        print("  다음: override의 '프로젝트 판단' 절을 채우고 design.md를 쓴 뒤 UI 작성")
+    else:
+        print("  다음: references/art-direction.md로 아트 디렉션(무드, 레퍼런스 3개, 시그니처 2개+)을 정하고,")
+        print("        override의 '프로젝트 판단' 절과 design.md(아트 디렉션, 더한 것 포함)를 쓴 뒤 UI 작성")
     return 2 if warnings else 0
 
 
