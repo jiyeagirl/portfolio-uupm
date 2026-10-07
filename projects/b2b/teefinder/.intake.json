@@ -1,0 +1,23 @@
+{
+  "status": "ok",
+  "preset": "app",
+  "dials": [
+    7,
+    6,
+    5
+  ],
+  "query": "golf tee time booking membership app",
+  "slug": "teefinder",
+  "category": "Booking & Appointment App",
+  "style": "Soft UI Evolution",
+  "display_font": "Poppins",
+  "replaced": [
+    [
+      "디스플레이 폰트",
+      "Inter",
+      "Poppins"
+    ]
+  ],
+  "warnings": [],
+  "at": "2026-10-07T11:47:28"
+}

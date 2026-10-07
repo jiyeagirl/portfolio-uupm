@@ -1,0 +1,96 @@
+@import "@fontsource/gowun-batang/700.css";
+@import "@fontsource/poppins/latin-600.css";
+@import "@fontsource/poppins/latin-700.css";
+
+.teefinder {
+  --tf-ink: #0e2a22;
+  --tf-ink-2: #17382e;
+  --tf-ink-3: #24493d;
+  --tf-paper: #f5f1e6;
+  --tf-card: #ffffff;
+  --tf-line: #e4decf;
+  --tf-text: #14231d;
+  --tf-sub: #5b6a63;
+  --tf-brass: #b58532;
+  --tf-brass-ink: #7d5a1b;
+  --tf-cancel: #1d4ed8;
+  --tf-danger: #b42318;
+  --tf-heading: "Gowun Batang", "Pretendard Variable", Pretendard, serif;
+  --tf-display: "Poppins", "Pretendard Variable", Pretendard, sans-serif;
+  font-family: "Pretendard Variable", Pretendard, -apple-system, sans-serif;
+  color: var(--tf-text);
+  letter-spacing: -0.01em;
+}
+
+.teefinder .tf-heading {
+  font-family: var(--tf-heading);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.teefinder .tf-display {
+  font-family: var(--tf-display);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+/* 시간, 금액, 표 숫자는 Poppins가 고정폭을 지원하지 않아 Pretendard로 */
+.teefinder .tf-num {
+  font-family: "Pretendard Variable", Pretendard, sans-serif;
+  font-variant-numeric: tabular-nums;
+}
+
+.teefinder .tf-scroll-x {
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.teefinder .tf-scroll-x::-webkit-scrollbar {
+  display: none;
+}
+
+.teefinder .tf-press {
+  transition: background-color 120ms ease-out, opacity 120ms ease-out;
+}
+.teefinder .tf-press:active {
+  background-color: rgba(14, 42, 34, 0.06);
+}
+
+.teefinder :focus-visible {
+  outline: 2px solid var(--tf-brass);
+  outline-offset: 2px;
+}
+
+@keyframes tf-rise {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.teefinder .tf-rise {
+  animation: tf-rise 220ms ease-out both;
+}
+
+@keyframes tf-fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.teefinder .tf-fade {
+  animation: tf-fade 200ms ease-out both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .teefinder .tf-rise,
+  .teefinder .tf-fade {
+    animation: none;
+  }
+}
