@@ -1,0 +1,23 @@
+{
+  "status": "ok",
+  "preset": "web",
+  "dials": [
+    6,
+    5,
+    5
+  ],
+  "query": "local community neighborhood board women living alone",
+  "slug": "honzip",
+  "category": "Hyperlocal Services",
+  "style": "Minimalism",
+  "display_font": "Outfit",
+  "replaced": [
+    [
+      "디스플레이 폰트",
+      "Inter",
+      "Outfit"
+    ]
+  ],
+  "warnings": [],
+  "at": "2026-10-02T18:10:44"
+}
