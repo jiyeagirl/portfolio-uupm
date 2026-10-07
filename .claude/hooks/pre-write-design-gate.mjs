@@ -73,6 +73,14 @@ if (!existsSync(designMd)) {
     if (!/^## 아트 디렉션/m.test(dm)) {
       problems.push(`${projRel}/design.md에 '## 아트 디렉션' 절이 없음. references/art-direction.md 절차로 무드, 레퍼런스 3개, 시그니처 2개 이상을 씀`);
     }
+    if (!/^한글 디스플레이\s*:\s*\S+/m.test(dm)) {
+      problems.push(`${projRel}/design.md의 아트 디렉션에 '한글 디스플레이: <폰트 또는 쓰지 않음(이유)>' 줄이 없음. references/font-map.md에서 골라 설치하고 적용함`);
+    }
+    const structural = section("구조 변경").split("\n").filter((l) => l.trim().startsWith("-")).length;
+    if (structural < 1) problems.push(`${projRel}/design.md에 '## 구조 변경'이 없음. 프리셋의 흔한 구성에서 레이아웃을 바꾼 곳을 1개 이상 적음`);
+    if (!/\(실측\)/.test(section("아트 디렉션"))) {
+      problems.push(`${projRel}/design.md의 레퍼런스에 '(실측)' 표기가 없음. 브라우저로 실제 화면을 열어 확인한 레퍼런스가 최소 1개 필요함. 열리지 않는 곳은 '(미확인)'으로 표시`);
+    }
     const added = section("더한 것").split("\n").filter((l) => l.trim().startsWith("-")).length;
     if (added < 2) problems.push(`${projRel}/design.md의 '## 더한 것'이 2줄 미만. 버리기만 하면 화면이 무난해짐`);
   }

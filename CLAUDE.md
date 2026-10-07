@@ -66,7 +66,7 @@ UUPM은 "틀리지 않게"까지만 정해줌. web, app은 그 위에 아트 디
    2. `python3 .claude/skills/design-intake/scripts/intake.py --project projects/<c>/<p> --query "<질의어>"` 실행. UUPM 생성, 폰트와 스타일 자동 검사, 프로젝트 안 저장까지 함.
    3. 카테고리, 컬러, 폰트가 spec과 맞는지 눈으로 확인. 안 맞으면 질의어를 좁혀 1회 재실행.
    4. 보조 검색(`--domain product|ux|chart`)으로 화면 근거를 보강.
-   5. web, app이면 `references/art-direction.md`로 아트 디렉션을 정함.
+   5. web, app이면 `references/art-direction.md`로 아트 디렉션을 정함. 레퍼런스는 브라우저로 실제 화면을 열어 확인하고(안 열리는 곳은 사용자에게 캡처 요청, 사용자가 면제하면 열리는 것만 사용), 한글 디스플레이 폰트 설치와 구조 변경 1개 이상까지 포함.
    6. `pages/<preset>.md`의 "프로젝트 판단" 절(상태 색, 셸 선택, 보조 검색 결과)과 `design.md`를 씀.
 3. **빌드.** `lib/types.ts` → `lib/mock-data.ts` → `components/ui.tsx` → 화면 → 셸 → `src/index.tsx` 순서. spec의 모든 화면을 한 번에 만들고 화면마다 멈추지 않음.
 4. **검사.** `tsc --noEmit`, `eslint`, 라우트 200 확인을 마지막에 한 번.
@@ -80,14 +80,15 @@ UUPM은 "틀리지 않게"까지만 정해줌. web, app은 그 위에 아트 디
 1. `npm run visual -- <c> <p> <screen...> [--device=console|web]`로 spec의 모든 화면 캡처. `--with-admin`은 `-admin` URL을 따로 캡처.
    - 화면마다 상태가 다른 경우(지연 건, 승인 대기 건, 필터 탭 선택)도 `name:key=value` 토큰으로 캡처함. 리뷰어는 캡처에 없는 상태를 확인할 수 없음.
 2. 출력의 `[error]`(금지 문자, 가로 넘침, 폰트 누락, 깨진 이미지, 모서리 흰 틈, 콘솔 에러)는 리뷰 전에 고침.
-3. 리뷰어 3개를 **병렬로** 띄움. 리뷰어에게 코드는 주지 않고 캡처 PNG와 문서만 줌. 프롬프트에 프로젝트 경로, slug, 프리셋, PNG 목록(각 PNG가 어떤 상태인지)을 적음.
+3. web, app은 리뷰어 호출 전에 캡처(데스크톱과 모바일 홈)를 사용자에게 보여 방향을 확인함. 점검표 통과와 사용자가 느끼는 인상은 다를 수 있음.
+4. 리뷰어 3개를 **병렬로** 띄움. 리뷰어에게 코드는 주지 않고 캡처 PNG와 문서만 줌. 프롬프트에 프로젝트 경로, slug, 프리셋, PNG 목록(각 PNG가 어떤 상태인지)을 적음.
    - `review-domain`: spec + MASTER.md 기준. 업종에 맞는 인상인가, Anti-patterns를 어겼는가
    - `review-ux`: UUPM 사전 점검표 + 플랫폼 레퍼런스. 상태 표기, 정렬, 숫자 표기, 포커스, 빈 상태
    - `review-visual`: 위계, 여백, 정렬, 반복 레이아웃, AI 티 나는 패턴. web, app은 무난함 점검표와 시그니처 요소 노출까지 판정
-4. 지적을 high / mid / low로 합치고 high, mid만 고침. 바뀐 화면만 다시 캡처해서 같은 리뷰어에게 재판정 받음.
-5. 최대 2라운드. 남은 지적은 최종 요약의 "미해결"로 넘김.
-6. 빌더도 수정한 화면 PNG를 직접 열어 확인함. 리뷰어의 "통과"만 믿지 않음.
-7. 끝나면 `.visual-pending` 삭제.
+5. 지적을 high / mid / low로 합치고 high, mid만 고침. 바뀐 화면만 다시 캡처해서 같은 리뷰어에게 재판정 받음.
+6. 최대 2라운드. 남은 지적은 최종 요약의 "미해결"로 넘김.
+7. 빌더도 수정한 화면 PNG를 직접 열어 확인함. 리뷰어의 "통과"만 믿지 않음.
+8. 끝나면 `.visual-pending` 삭제.
 
 ## 5. 우선순위 (충돌 시)
 
