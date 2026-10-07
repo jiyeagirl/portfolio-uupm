@@ -55,7 +55,7 @@ export function WriteScreen({ initial, dong, onSubmit, onCancel }: { initial: Dr
     <div className="mx-auto max-w-[720px]">
       <div className="relative mb-6 overflow-hidden rounded-2xl bg-(--hz-primary) px-5 py-5 text-white md:px-7 md:py-6">
         <WindowGrid className="pointer-events-none absolute -right-3 -top-5 h-32 w-32 text-white/15" />
-        <h1 className="text-[24px] font-extrabold leading-8 md:text-[30px] md:leading-10">글쓰기</h1>
+        <h1 className="heading text-[24px] font-bold leading-8 md:text-[30px] md:leading-10">글쓰기</h1>
         <p className="mt-1 text-[14.5px] text-white/90">{dong} 이웃들에게 묻거나 알려 주고 싶은 것을 적어 주세요.</p>
       </div>
 

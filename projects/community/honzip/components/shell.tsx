@@ -13,7 +13,7 @@ function DongPicker({ dong, onDong }: { dong: string; onDong: (d: string) => voi
         aria-haspopup="listbox"
         aria-expanded={open}
         onClick={() => setOpen((o) => !o)}
-        className="inline-flex h-10 cursor-pointer items-center gap-1 rounded-lg bg-(--hz-primary-soft) pl-2.5 pr-2 text-[14px] font-semibold text-(--hz-primary-hover) transition-colors hover:bg-[#d3ecdf]"
+        className="inline-flex h-10 cursor-pointer items-center gap-1 rounded-lg bg-(--hz-primary-soft) pl-2.5 pr-2 text-[14px] font-semibold text-(--hz-primary-hover) transition-colors hover:bg-[#d5e6cf]"
       >
         <MapPin size={16} weight="fill" aria-hidden />
         {dong}
@@ -68,21 +68,13 @@ export function Shell({
     <div>
       <header className="sticky top-0 z-30 border-b border-(--hz-line) bg-(--hz-surface)">
         <div className="mx-auto flex h-14 max-w-[1200px] items-center gap-3 px-4 md:h-16 md:gap-5 md:px-6">
-          <button type="button" onClick={() => go("home")} className="inline-flex cursor-pointer items-center gap-1.5 text-[22px] font-extrabold tracking-[-0.03em] text-(--hz-primary)" aria-label="혼집 홈">
+          <button type="button" onClick={() => go("home")} className="heading inline-flex cursor-pointer items-center gap-1.5 text-[22px] font-extrabold text-(--hz-primary)" aria-label="혼집 홈">
             <HonzipMark size={30} />
             혼집
           </button>
           <DongPicker dong={dong} onDong={onDong} />
           {screen === "home" && <div className="ml-2 hidden max-w-[460px] flex-1 md:block">{search}</div>}
           <nav aria-label="주 메뉴" className="ml-auto hidden items-center gap-3 md:flex">
-            <button
-              type="button"
-              aria-current={screen === "home" ? "page" : undefined}
-              onClick={() => go("home")}
-              className={`h-10 cursor-pointer rounded-lg px-3.5 text-[15px] font-semibold transition-colors ${screen === "home" ? "bg-(--hz-primary-soft) text-(--hz-primary-hover)" : "text-(--hz-ink-3) hover:bg-(--hz-muted) hover:text-(--hz-ink)"}`}
-            >
-              홈
-            </button>
             <button
               type="button"
               aria-current={active === "write" ? "page" : undefined}

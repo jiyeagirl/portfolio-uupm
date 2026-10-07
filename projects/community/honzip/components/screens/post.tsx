@@ -7,7 +7,7 @@ import { Author, Button, PhotoTile, Tag, TopicChip, inputCls, kindTone } from ".
 
 function CommentItem({ c, adopted }: { c: Comment; adopted?: boolean }) {
   return (
-    <li className={adopted ? "rounded-xl border border-[#A7F3D0] bg-[#F0FBF5] p-4" : "border-t border-(--hz-line) py-4 first:border-t-0"}>
+    <li className={adopted ? "rounded-xl border border-[#BFD9B5] bg-[#EEF5E9] p-4" : "border-t border-(--hz-line) py-4 first:border-t-0"}>
       {adopted && <div className="mb-2"><Tag tone="adopted" /></div>}
       <div className="flex flex-wrap items-center gap-x-2.5">
         <Author nickname={c.nickname} dong={c.dong} />
@@ -52,7 +52,7 @@ export function PostScreen({
             <Tag tone={kindTone(post.kind)} />
             {post.adoptedCommentId && <Tag tone="solved" />}
           </div>
-          <h1 className="text-[22px] font-bold leading-[32px] md:text-[26px] md:leading-[36px]">{post.title}</h1>
+          <h1 className="heading text-[22px] font-bold leading-[32px] md:text-[28px] md:leading-[40px]">{post.title}</h1>
           <div className="mt-3 flex flex-wrap items-center gap-x-3 gap-y-1">
             <Author nickname={post.nickname} dong={post.dong} anonymous={post.nickname === "익명"} />
             <span className="text-[13.5px] text-(--hz-ink-4)">{ago(post.minutesAgo)}</span>
@@ -91,7 +91,7 @@ export function PostScreen({
           </div>
 
         <section aria-labelledby="comments" className="mt-7 border-t border-(--hz-line) pt-6">
-          <h2 id="comments" className="mb-3 text-[17px] font-bold">댓글 <span className="num text-(--hz-primary)">{post.comments.length}</span></h2>
+          <h2 id="comments" className="heading mb-3 text-[19px] font-bold">댓글 <span className="num text-(--hz-primary)">{post.comments.length}</span></h2>
           {adopted && <ul className="mb-2"><CommentItem c={adopted} adopted /></ul>}
           {rest.length > 0 && <ul>{rest.map((c) => <CommentItem key={c.id} c={c} />)}</ul>}
           {post.comments.length === 0 && <p className="py-4 text-[14.5px] text-(--hz-ink-4)">아직 댓글이 없어요. 아는 만큼 먼저 답해 주세요.</p>}
@@ -118,7 +118,7 @@ export function PostScreen({
 
       <aside aria-label="함께 읽어 보세요">
         <div className="rounded-xl border border-(--hz-line) bg-(--hz-surface) p-5 lg:sticky lg:top-24">
-          <h2 className="mb-1 text-[16px] font-bold">{related.every((p) => p.topic === post.topic) ? "같은 주제의 다른 글" : "함께 읽어 보세요"}</h2>
+          <h2 className="heading mb-1 text-[18px] font-bold">{related.every((p) => p.topic === post.topic) ? "같은 주제의 다른 글" : "함께 읽어 보세요"}</h2>
           <ul>
             {related.map((p) => (
               <li key={p.id} className="border-t border-(--hz-line) first:border-t-0">

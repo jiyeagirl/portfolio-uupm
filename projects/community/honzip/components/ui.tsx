@@ -7,7 +7,7 @@ type Tone = { fg: string; bg: string; Icon: typeof Question; label: string };
 export const LABEL: Record<"solved" | "question" | "info" | "adopted" | "alert", Tone> = {
   solved: { fg: "#065F46", bg: "#D1FAE5", Icon: CheckCircle, label: "해결됨" },
   question: { fg: "#0C5A82", bg: "#E0F0F9", Icon: Question, label: "질문" },
-  info: { fg: "#475569", bg: "#EEF1EB", Icon: Lightbulb, label: "정보 공유" },
+  info: { fg: "#5a4f44", bg: "#F1EADB", Icon: Lightbulb, label: "정보 공유" },
   adopted: { fg: "#065F46", bg: "#D1FAE5", Icon: SealCheck, label: "작성자가 채택한 답변" },
   alert: { fg: "#9A3412", bg: "#FFEDD5", Icon: WarningCircle, label: "안전 알림" },
 };
@@ -52,7 +52,7 @@ export function HonzipMark({ size = 28, className = "" }: { size?: number; class
   );
 }
 
-// 창문 격자 모티프. 브랜드 영역, 사진 자리, 빈 상태에서 반복
+// 창문 격자 모티프. 불 켜진 창(주황)은 답해 주는 이웃, 꺼진 창은 아직 조용한 집을 뜻함
 export function WindowGrid({ className = "" }: { className?: string }) {
   return (
     <svg viewBox="0 0 120 120" fill="none" aria-hidden className={className}>
@@ -63,11 +63,55 @@ export function WindowGrid({ className = "" }: { className?: string }) {
   );
 }
 
-// 사진이 없는 자리는 창문 격자 틴트 타일로 둠 (사진 요청 목록에 기록)
+// 홈 배너용 건물 일러스트. 창마다 불이 켜진 집(주황)과 꺼진 집(연한 면)이 섞이고 일부 창에는 말풍선이 걸림
+export function Facade({ className = "" }: { className?: string }) {
+  const cols = [0, 1, 2];
+  const rows = [0, 1, 2];
+  const lit = new Set(["0-0", "1-1", "2-0", "1-2", "0-2"]);
+  const talk = new Set(["1-1", "2-0"]);
+  return (
+    <svg viewBox="0 0 300 260" fill="none" aria-hidden className={className}>
+      <path d="M18 74 150 12l132 62" stroke="#FFF8E8" strokeWidth="9" strokeLinecap="round" strokeLinejoin="round" />
+      <rect x="34" y="74" width="232" height="168" rx="6" fill="#065F46" />
+      <rect x="34" y="74" width="232" height="168" rx="6" stroke="#FFF8E8" strokeWidth="6" />
+      {rows.map((r) =>
+        cols.map((c) => {
+          const k = `${c}-${r}`;
+          const on = lit.has(k);
+          const x = 54 + c * 72;
+          const y = 92 + r * 46;
+          return (
+            <g key={k}>
+              <rect x={x} y={y} width="56" height="34" rx="5" fill={on ? "#FDBA74" : "#0B7A5A"} stroke="#FFF8E8" strokeWidth="3" />
+              <path d={`M${x + 28} ${y}v34M${x} ${y + 17}h56`} stroke="#FFF8E8" strokeWidth="2.4" opacity={on ? 0.9 : 0.5} />
+              {talk.has(k) && (
+                <g>
+                  <rect x={x + 30} y={y - 16} width="30" height="20" rx="8" fill="#FFF8E8" />
+                  <path d={`M${x + 38} ${y + 3}l-4 8 11-6z`} fill="#FFF8E8" />
+                  <circle cx={x + 38} cy={y - 6} r="2" fill="#C2410C" />
+                  <circle cx={x + 45} cy={y - 6} r="2" fill="#C2410C" />
+                  <circle cx={x + 52} cy={y - 6} r="2" fill="#C2410C" />
+                </g>
+              )}
+            </g>
+          );
+        }),
+      )}
+      <rect x="132" y="206" width="36" height="36" rx="4" fill="#FFF8E8" />
+      <circle cx="160" cy="226" r="2.5" fill="#065F46" />
+    </svg>
+  );
+}
+
+// 사진이 없는 자리는 불 켜진 창 하나가 있는 따뜻한 타일로 둠 (사진 요청 목록에 기록)
 export function PhotoTile({ className = "" }: { className?: string }) {
   return (
-    <div role="img" aria-label="첨부 사진 자리" className={`flex items-center justify-center bg-(--hz-primary-soft) text-(--hz-primary)/45 ${className}`}>
-      <WindowGrid className="h-1/2 max-h-14 w-1/2 max-w-14" />
+    <div role="img" aria-label="첨부 사진 자리" className={`flex items-center justify-center bg-(--hz-muted) ${className}`}>
+      <svg viewBox="0 0 120 120" fill="none" aria-hidden className="h-1/2 max-h-20 w-1/2 max-w-20">
+        <rect x="14" y="14" width="92" height="92" rx="12" stroke="#cfc3ab" strokeWidth="5" />
+        <path d="M60 14v92M14 60h92" stroke="#cfc3ab" strokeWidth="5" />
+        <rect x="24" y="24" width="26" height="26" rx="4" fill="#FDBA74" />
+      </svg>
     </div>
   );
 }

@@ -1,25 +1,27 @@
 /* 혼집 토큰. 근거: design-system/honzip/MASTER.md + pages/web.md
    프로젝트 토큰은 접두사 변수로 루트 래퍼(.honzip)에 스코프. Tailwind에서는 bg-(--hz-primary)처럼 사용 */
+@import "@fontsource-variable/hahmlet/index.css";
 @import "@fontsource/outfit/latin-500.css";
 @import "@fontsource/outfit/latin-600.css";
 @import "@fontsource/outfit/latin-700.css";
 
 .honzip {
-  --hz-ink: #1f2a24;
-  --hz-ink-2: #3b4a42;
-  --hz-ink-3: #56655d;
-  --hz-ink-4: #5a6962;
-  --hz-canvas: #f6f7f3;
-  --hz-surface: #ffffff;
-  --hz-muted: #eef1eb;
-  --hz-line: #e1e6de;
-  --hz-line-strong: #c9d1c6;
+  --hz-ink: #2a2420;
+  --hz-ink-2: #453d36;
+  --hz-ink-3: #5f564d;
+  --hz-ink-4: #6a6057;
+  --hz-canvas: #faf5ea;
+  --hz-surface: #fffdf8;
+  --hz-muted: #f1eadb;
+  --hz-line: #e8dfcd;
+  --hz-line-strong: #cfc3ab;
   --hz-primary: #047857;
   --hz-primary-hover: #065f46;
-  --hz-primary-soft: #e3f3ea;
+  --hz-primary-soft: #e4efdf;
   --hz-accent: #c2410c;
   --hz-accent-hover: #9a3412;
   --hz-danger: #b91c1c;
+  --hz-font-heading: "Hahmlet Variable", "Pretendard Variable", Pretendard, serif;
   --hz-font-display: "Outfit", "Pretendard Variable", Pretendard, sans-serif;
 
   background: var(--hz-canvas);
@@ -53,4 +55,9 @@
     transition-duration: 0.01ms !important;
     animation-duration: 0.01ms !important;
   }
+}
+
+.honzip .heading {
+  font-family: var(--hz-font-heading);
+  letter-spacing: -0.02em;
 }
