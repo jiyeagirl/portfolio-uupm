@@ -2,7 +2,7 @@ import { useState, type ReactNode } from "react";
 import { CaretDown, List, MapPin, MagnifyingGlass, PencilSimple, X } from "@phosphor-icons/react";
 import type { Screen } from "../lib/types";
 import { DONGS } from "../lib/mock-data";
-import { inputCls } from "./ui";
+import { HonzipMark, inputCls } from "./ui";
 
 function DongPicker({ dong, onDong }: { dong: string; onDong: (d: string) => void }) {
   const [open, setOpen] = useState(false);
@@ -68,7 +68,8 @@ export function Shell({
     <div>
       <header className="sticky top-0 z-30 border-b border-(--hz-line) bg-(--hz-surface)">
         <div className="mx-auto flex h-14 max-w-[1200px] items-center gap-3 px-4 md:h-16 md:gap-5 md:px-6">
-          <button type="button" onClick={() => go("home")} className="font-(family-name:--hz-font-display) cursor-pointer text-[22px] font-semibold tracking-[-0.02em] text-(--hz-primary)" aria-label="혼집 홈">
+          <button type="button" onClick={() => go("home")} className="inline-flex cursor-pointer items-center gap-1.5 text-[22px] font-extrabold tracking-[-0.03em] text-(--hz-primary)" aria-label="혼집 홈">
+            <HonzipMark size={30} />
             혼집
           </button>
           <DongPicker dong={dong} onDong={onDong} />
@@ -76,9 +77,9 @@ export function Shell({
           <nav aria-label="주 메뉴" className="ml-auto hidden items-center gap-3 md:flex">
             <button
               type="button"
-              aria-current={active === "home" ? "page" : undefined}
+              aria-current={screen === "home" ? "page" : undefined}
               onClick={() => go("home")}
-              className={`h-10 cursor-pointer rounded-lg px-3.5 text-[15px] font-semibold transition-colors ${active === "home" ? "bg-(--hz-primary-soft) text-(--hz-primary-hover)" : "text-(--hz-ink-3) hover:text-(--hz-ink)"}`}
+              className={`h-10 cursor-pointer rounded-lg px-3.5 text-[15px] font-semibold transition-colors ${screen === "home" ? "bg-(--hz-primary-soft) text-(--hz-primary-hover)" : "text-(--hz-ink-3) hover:bg-(--hz-muted) hover:text-(--hz-ink)"}`}
             >
               홈
             </button>
@@ -86,7 +87,7 @@ export function Shell({
               type="button"
               aria-current={active === "write" ? "page" : undefined}
               onClick={() => go("write")}
-              className={`inline-flex h-10 cursor-pointer items-center gap-1.5 rounded-lg px-4 text-[15px] font-semibold transition-colors ${active === "write" ? "bg-(--hz-primary-soft) text-(--hz-primary-hover)" : "bg-(--hz-accent) text-white hover:bg-(--hz-accent-hover)"}`}
+              className={`inline-flex h-10 cursor-pointer items-center gap-1.5 rounded-lg px-4 text-[15px] font-semibold transition-colors ${screen === "write" ? "hidden" : "bg-(--hz-accent) text-white hover:bg-(--hz-accent-hover)"}`}
             >
               <PencilSimple size={17} weight="bold" aria-hidden />
               글쓰기

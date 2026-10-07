@@ -1,5 +1,5 @@
 import type { ComponentProps, ReactNode } from "react";
-import { CheckCircle, ImageSquare, Lightbulb, Question, SealCheck, ShieldCheck, WarningCircle } from "@phosphor-icons/react";
+import { CheckCircle, Lightbulb, Question, SealCheck, ShieldCheck, WarningCircle } from "@phosphor-icons/react";
 import type { PostKind } from "../lib/types";
 
 type Tone = { fg: string; bg: string; Icon: typeof Question; label: string };
@@ -41,11 +41,33 @@ export function Author({ nickname, dong, anonymous }: { nickname: string; dong: 
   );
 }
 
-// 사진이 없는 자리는 틴트 타일로만 둠 (사진 요청 목록에 기록)
+// 지붕 선이 모자처럼 얹힌 'ㅎ' 마크
+export function HonzipMark({ size = 28, className = "" }: { size?: number; className?: string }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 28 28" fill="none" aria-hidden className={className}>
+      <path d="M5 11.5 14 4l9 7.5" stroke="currentColor" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M8 15.5h12" stroke="currentColor" strokeWidth="2.6" strokeLinecap="round" />
+      <circle cx="14" cy="21" r="3.3" stroke="currentColor" strokeWidth="2.6" />
+    </svg>
+  );
+}
+
+// 창문 격자 모티프. 브랜드 영역, 사진 자리, 빈 상태에서 반복
+export function WindowGrid({ className = "" }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 120 120" fill="none" aria-hidden className={className}>
+      <rect x="8" y="8" width="104" height="104" rx="14" stroke="currentColor" strokeWidth="5" />
+      <path d="M60 8v104M8 60h104" stroke="currentColor" strokeWidth="5" />
+      <rect x="20" y="20" width="28" height="28" rx="4" fill="currentColor" opacity=".35" />
+    </svg>
+  );
+}
+
+// 사진이 없는 자리는 창문 격자 틴트 타일로 둠 (사진 요청 목록에 기록)
 export function PhotoTile({ className = "" }: { className?: string }) {
   return (
-    <div role="img" aria-label="첨부 사진 자리" className={`flex items-center justify-center bg-[#E3EBE4] text-[#7C9185] ${className}`}>
-      <ImageSquare size={28} weight="light" aria-hidden />
+    <div role="img" aria-label="첨부 사진 자리" className={`flex items-center justify-center bg-(--hz-primary-soft) text-(--hz-primary)/45 ${className}`}>
+      <WindowGrid className="h-1/2 max-h-14 w-1/2 max-w-14" />
     </div>
   );
 }
@@ -56,8 +78,8 @@ export function Button({ variant = "secondary", icon, className = "", children, 
   const base =
     "inline-flex h-11 cursor-pointer items-center justify-center gap-1.5 rounded-lg px-4 text-[15px] font-semibold transition-colors duration-150 disabled:cursor-not-allowed disabled:opacity-45";
   const v = {
-    cta: "bg-(--hz-accent) text-white hover:bg-(--hz-accent-hover) disabled:bg-(--hz-muted) disabled:text-(--hz-ink-4) disabled:opacity-100",
-    primary: "bg-(--hz-primary) text-white hover:bg-(--hz-primary-hover) disabled:bg-(--hz-muted) disabled:text-(--hz-ink-4) disabled:opacity-100",
+    cta: "bg-(--hz-accent) text-white hover:bg-(--hz-accent-hover) disabled:bg-(--hz-line) disabled:text-(--hz-ink-3) disabled:opacity-100",
+    primary: "bg-(--hz-primary) text-white hover:bg-(--hz-primary-hover) disabled:bg-(--hz-line) disabled:text-(--hz-ink-3) disabled:opacity-100",
     secondary: "border border-(--hz-line-strong) bg-(--hz-surface) text-(--hz-ink) hover:bg-(--hz-muted)",
     ghost: "text-(--hz-ink-3) hover:bg-(--hz-muted) hover:text-(--hz-ink)",
   }[variant];

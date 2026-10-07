@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { motion } from "motion/react";
 import { ArrowLeft, BookmarkSimple, ThumbsUp } from "@phosphor-icons/react";
 import type { Comment, Post } from "../../lib/types";
 import { ago, num } from "../../lib/format";
@@ -43,7 +44,9 @@ export function PostScreen({
     </button>
     <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_320px] lg:gap-8">
       <div className="min-w-0">
-        <article className="rounded-xl border border-(--hz-line) bg-(--hz-surface) p-5 md:p-7">
+        <article className="overflow-hidden rounded-xl border border-(--hz-line) bg-(--hz-surface)">
+          <div aria-hidden className="relative h-3 bg-(--hz-primary)" />
+          <div className="p-5 md:p-7">
           <div className="mb-3 flex flex-wrap items-center gap-1.5">
             <TopicChip>{post.topic}</TopicChip>
             <Tag tone={kindTone(post.kind)} />
@@ -59,7 +62,7 @@ export function PostScreen({
 
           {post.photos > 0 && (
             <div className={`mt-6 grid gap-2 ${cols}`}>
-              {Array.from({ length: post.photos }).map((_, i) => <PhotoTile key={i} className="aspect-[4/3] w-full rounded-lg" />)}
+              {Array.from({ length: post.photos }).map((_, i) => <PhotoTile key={i} className="aspect-[4/3] w-full rounded-2xl" />)}
             </div>
           )}
 
@@ -70,7 +73,9 @@ export function PostScreen({
               onClick={onLike}
               className={`inline-flex h-11 cursor-pointer items-center gap-2 rounded-lg border px-4 text-[15px] font-semibold transition-colors ${liked ? "border-(--hz-primary) bg-(--hz-primary-soft) text-(--hz-primary-hover)" : "border-(--hz-line-strong) bg-(--hz-surface) hover:bg-(--hz-muted)"}`}
             >
-              <ThumbsUp size={18} weight={liked ? "fill" : "regular"} aria-hidden />
+              <motion.span key={liked ? "on" : "off"} initial={liked ? { scale: 0.6, rotate: -18 } : false} animate={{ scale: 1, rotate: 0 }} transition={{ type: "spring", stiffness: 520, damping: 12 }} className="inline-flex">
+                <ThumbsUp size={18} weight={liked ? "fill" : "regular"} aria-hidden />
+              </motion.span>
               공감 <span className="num">{num(post.likes)}</span>
             </button>
             <span role="status" aria-atomic="true" className="sr-only">공감 {post.likes}개{liked ? ", 내가 공감함" : ""}</span>
@@ -107,6 +112,7 @@ export function PostScreen({
             </div>
           </form>
         </section>
+          </div>
         </article>
       </div>
 
